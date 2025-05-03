@@ -39,7 +39,7 @@ export function PokemonCard({ pokemon, onClick }: Props) {
         <img
           src={pokemon.sprites.front_default}
           alt={pokemon.name}
-          className="w-16 h-16"
+          className="w-35 h-35"
         />
       </div>
       <h2 className="text-lg font-bold mt-2 capitalize">{pokemon.name}</h2>
