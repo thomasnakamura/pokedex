@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { getPokemonList, getPokemonByName } from '../services/pokemonService';
 import { Pokemon } from '../types/pokemon';
 import { PokemonCard } from '../components/pokemonCard';
+import { PokemonModal } from '../components/pokemonModal';
 
 export function Home() {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
@@ -9,6 +10,7 @@ export function Home() {
   const [offset, setOffset] = useState(0);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
+  const [selected, setSelected] = useState<Pokemon | null>(null);
 
   const loaderRef = useRef<HTMLDivElement | null>(null);
 
@@ -58,10 +60,10 @@ export function Home() {
           const alreadyExists = prev.some((p) => p.id === result.id);
           return alreadyExists ? prev : [...prev, result];
         });
-
       })
       .catch(() => setFilteredPokemons([]));
   }, [search, pokemons]);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       entries => {
@@ -73,24 +75,19 @@ export function Home() {
       { threshold: 1 }
     );
 
-    if (loaderRef.current) {
-      observer.observe(loaderRef.current);
-    }
-
+    if (loaderRef.current) observer.observe(loaderRef.current);
     return () => {
-      if (loaderRef.current) {
-        observer.unobserve(loaderRef.current);
-      }
+      if (loaderRef.current) observer.unobserve(loaderRef.current);
     };
-  }, [loaderRef, search, loadMore]);
+  }, [loaderRef, search, offset, loading]);
 
   const list = filteredPokemons ?? pokemons;
 
   return (
-    <div className="p-8 max-w-5xl mx-auto">
+    <div className="p-8 max-w-5xl mx-auto min-h-screen bg-gray-50">
       <h1 className="text-3xl font-bold mb-6 text-center">Pokédex</h1>
 
-      <div className="sticky top-0 z-20 pb-4 pt-2">
+      <div className="sticky top-0 z-20 pb-4 pt-2 bg-gray-50">
         <input
           type="text"
           placeholder="Buscar Pokémon..."
@@ -102,7 +99,7 @@ export function Home() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {list.map((p) => (
-          <PokemonCard key={p.id} pokemon={p} />
+          <PokemonCard key={p.id} pokemon={p} onClick={() => setSelected(p)} />
         ))}
       </div>
 
@@ -114,6 +111,10 @@ export function Home() {
 
       {search && list.length === 0 && (
         <div className="text-center text-gray-500 mt-6">Nenhum Pokémon encontrado.</div>
+      )}
+
+      {selected && (
+        <PokemonModal pokemon={selected} onClose={() => setSelected(null)} />
       )}
     </div>
   );

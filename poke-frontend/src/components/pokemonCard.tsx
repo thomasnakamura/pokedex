@@ -2,6 +2,7 @@ import { Pokemon } from "../types/pokemon";
 
 interface Props {
   pokemon: Pokemon;
+  onClick?: () => void;
 }
 
 const typeColors: Record<string, string> = {
@@ -24,34 +25,34 @@ const typeColors: Record<string, string> = {
   fairy: "bg-pink-200",
 };
 
-export function PokemonCard({ pokemon }: Props) {
+export function PokemonCard({ pokemon, onClick }: Props) {
   const primaryType = pokemon.types[0]?.type.name;
   const cardColor = typeColors[primaryType] || "bg-gray-300";
 
   return (
     <div
-      className={`relative rounded-2xl p-4 text-white ${cardColor} shadow-xl overflow-hidden flex flex-col justify-between h-44`}
+      onClick={onClick}
+      className={`rounded-xl p-4 text-white shadow-lg transition transform hover:scale-105 cursor-pointer ${cardColor}`}
     >
-      <div className="z-10 relative">
+      <div className="flex items-center justify-between">
         <span className="text-sm font-bold">#{pokemon.id}</span>
-        <h2 className="text-2xl font-bold mt-1 capitalize">{pokemon.name}</h2>
-        <div className="flex gap-2 mt-2 flex-wrap">
-          {pokemon.types.map(({ type }) => (
-            <span
-              key={type.name}
-              className="bg-white text-black text-xs font-medium px-2 py-1 rounded-full capitalize"
-            >
-              {type.name}
-            </span>
-          ))}
-        </div>
+        <img
+          src={pokemon.sprites.front_default}
+          alt={pokemon.name}
+          className="w-16 h-16"
+        />
       </div>
-
-      <img
-        src={pokemon.sprites.front_default}
-        alt={pokemon.name}
-        className="absolute right-[-10px] bottom-[-5px] w-28 h-28 opacity-60"
-      />
+      <h2 className="text-lg font-bold mt-2 capitalize">{pokemon.name}</h2>
+      <div className="flex gap-2 mt-2 flex-wrap">
+        {pokemon.types.map(({ type }) => (
+          <span
+            key={type.name}
+            className="bg-white bg-opacity-20 text-xs px-2 py-1 rounded-full capitalize"
+          >
+            {type.name}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }
