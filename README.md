@@ -1,54 +1,62 @@
-# React + TypeScript + Vite
+# Pokédex 📘
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Uma Pokédex moderna desenvolvida com **React + TypeScript** no frontend e **NestJS** no backend, utilizando a [PokeAPI](https://pokeapi.co/) como fonte de dados. O projeto tem como foco performance, organização e uma UI responsiva com uma experiência fluida para o usuário.
 
-Currently, two official plugins are available:
+![image](https://github.com/user-attachments/assets/2a93ec6a-dc87-4c80-9165-83865f6f6fb2)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## ✨ Funcionalidades
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- 🔎 **Busca por nome** com filtragem por substring (ex: `saur` retorna Bulbasaur, Ivysaur...)
+- ♾️ **Scroll infinito** para carregamento contínuo dos Pokémon
+- 🧠 **Cache inteligente**: Pokémon pesquisados fora da lista inicial são armazenados em memória
+- 📋 **Detalhamento completo** ao clicar em um card (nome, altura, peso, tipos, habilidades e som)
+- 🎧 **Reprodução de som (cry)**
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+---
+
+## 🚀 Tecnologias
+
+**Frontend:**
+
+- React
+- TypeScript
+- Tailwind CSS
+- Vite
+
+**Backend:**
+
+- NestJS
+- Axios
+- CORS
+
+---
+
+## 🗂️ Estrutura do Projeto
+```bash
+├── poke-backend → Backend NestJS
+│ └── src
+│ └── pokemon → Módulo responsável pela comunicação com a PokeAPI
+│
+├── poke-frontend → Frontend React
+│ ├── components → Componentes visuais (Card, Modal, etc)
+│ ├── page → Página principal (Home.tsx)
+│ ├── services → Comunicação com o backend
+│ └── types → Tipagens TypeScript para os dados
 ```
+## ▶️ Como rodar o projeto
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+1. Inicie o Backend
+```bash
+cd poke-backend
+yarn install
+yarn start:dev
 ```
+3. Inicie o Frontend
+```bash
+cd poke-frontend
+yarn install
+yarn dev
+```
+O backend será servido em `http://localhost:3000` e o frontend em `http://localhost:5173`.
