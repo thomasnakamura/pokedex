@@ -12,7 +12,7 @@ Uma Pokédex moderna desenvolvida com **React + TypeScript** no frontend e **Nes
 - ♾️ **Scroll infinito** para carregamento contínuo dos Pokémon
 - 🧠 **Cache inteligente**: Pokémon pesquisados fora da lista inicial são armazenados em memória
 - 📋 **Detalhamento completo** ao clicar em um card (nome, altura, peso, tipos, habilidades e som)
-- 🎧 **Reprodução de som (cry)** com volume reduzido por padrão
+- 🎧 **Reprodução de som (cry)**
 
 ---
 
